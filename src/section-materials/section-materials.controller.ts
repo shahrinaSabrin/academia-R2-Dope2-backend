@@ -6,11 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { SectionMaterialsService } from './section-materials.service';
 import { CreateSectionMaterialDto } from './dto/create-section-material.dto';
 import { UpdateSectionMaterialDto } from './dto/update-section-material.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('section-materials')
 export class SectionMaterialsController {
   constructor(

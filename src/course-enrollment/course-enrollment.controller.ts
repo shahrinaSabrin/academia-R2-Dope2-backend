@@ -7,8 +7,9 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiQuery } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import {
   IPaginationQuery,
   LimitQuery,
@@ -18,7 +19,10 @@ import {
 import { CourseEnrollmentService } from './course-enrollment.service';
 import { CreateCourseEnrollmentDto } from './dto/create-course-enrollment.dto';
 import { UpdateCourseEnrollmentDto } from './dto/update-course-enrollment.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('course-enrollment')
 export class CourseEnrollmentController {
   constructor(

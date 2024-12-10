@@ -8,10 +8,11 @@ import {
   StreamableFile,
   UploadedFile,
   UploadedFiles,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { UploadSingleFileDto } from './dto/upload-single-file';
 import { UploadMultipleFilesDto } from './dto/upload-multiple-files';
@@ -19,7 +20,10 @@ import storage from './files.storage';
 import { createReadStream, existsSync } from 'fs';
 import { join } from 'path';
 import { Response } from 'express';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @ApiTags('Files')
 @Controller('files')
 export class FilesController {

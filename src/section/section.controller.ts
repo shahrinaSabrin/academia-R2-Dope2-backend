@@ -7,20 +7,22 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { SectionService } from './section.service';
 import { CreateSectionDto } from './dto/create-section.dto';
 import { UpdateSectionDto } from './dto/update-section.dto';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import {
   IPaginationQuery,
   LimitQuery,
   PageQuery,
   SearchQuery,
 } from 'src/utils/pagination/query.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
-// @ApiBearerAuth()
-// @UseGuards(AuthGuard)
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @ApiTags('Courses')
 @Controller('sections')
 export class SectionController {

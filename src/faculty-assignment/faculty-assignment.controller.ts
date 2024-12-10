@@ -7,14 +7,18 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { IPaginationQuery } from 'src/utils/pagination/query.dto';
 
-import { ApiQuery } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { CreateFacultyAssignmentDto } from './dto/create-faculty-assignment.dto';
 import { UpdateFacultyAssignmentDto } from './dto/update-faculty-assignment.dto';
 import { FacultyAssignmentService } from './faculty-assignment.service';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('faculty-assignment')
 export class FacultyAssignmentController {
   constructor(
