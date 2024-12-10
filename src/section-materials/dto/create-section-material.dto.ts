@@ -23,6 +23,7 @@ export class CreateSectionMaterialDto {
 
   @ApiProperty({
     required: true,
+    enum: ['FILE', 'IMAGE', 'VIDEO', 'LINK'],
   })
   material_type: 'FILE' | 'IMAGE' | 'VIDEO' | 'LINK';
 }

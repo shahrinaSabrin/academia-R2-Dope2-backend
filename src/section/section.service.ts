@@ -24,6 +24,36 @@ export class SectionService {
         course_section_faculty_assignments: true,
       },
     },
+    course_section_faculty_assignments: {
+      select: {
+        id: true,
+        faculty_role: true,
+        faculty: {
+          select: {
+            id: true,
+            username: true,
+            profile: {
+              select: {
+                first_name: true,
+                last_name: true,
+                bio: true,
+              },
+            },
+          },
+        },
+      },
+    },
+    course_section_material: {
+      select: {
+        id: true,
+        material_title: true,
+        material_description: true,
+        material_url: true,
+        material_type: true,
+        created_at: true,
+        updated_at: true,
+      },
+    },
     created_at: true,
     updated_at: true,
   };
