@@ -31,6 +31,8 @@ model User {
   assigned_course_sections_as_faculty CourseSectionFacultyAssignment[]
 
   assigned_classes Classes[]
+
+  attendences Attendence[]
 }
 
 enum UserRole {
@@ -169,10 +171,32 @@ model Classes {
   class_status    ClassStatus @default(PLANNED)
   created_at      DateTime   @default(now())
   updated_at      DateTime   @updatedAt
+
+  attendences Attendence[]
 }
 
 enum ClassStatus {
   PLANNED
   ONGOING
   COMPLETED
+}
+
+
+model Attendence {
+  id              Int       @id @default(autoincrement())
+  class_id        Int
+  class           Classes @relation(fields: [class_id], references: [id], onDelete: Cascade) // On delete class, delete attendence
+  student_id         Int
+  student            User    @relation(fields: [student_id], references: [id], onDelete: Cascade) // On delete user, delete attendence
+  
+  attendence_date DateTime
+  attendence_status AttendenceStatus @default(PRESENT)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+}
+
+enum AttendenceStatus {
+  PRESENT
+  ABSENT
+  LATE
 }
