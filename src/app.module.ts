@@ -7,6 +7,7 @@ import { SectionModule } from './section/section.module';
 import { CourseEnrollmentModule } from './course-enrollment/course-enrollment.module';
 import { FacultyAssignmentModule } from './faculty-assignment/faculty-assignment.module';
 import { FilesModule } from './files/files.module';
+import { SectionMaterialsModule } from './section-materials/section-materials.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { FilesModule } from './files/files.module';
     SectionModule,
     CourseEnrollmentModule,
     FacultyAssignmentModule,
+    SectionMaterialsModule,
   ],
 })
 export class AppModule {}
