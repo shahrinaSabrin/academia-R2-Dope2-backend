@@ -29,6 +29,8 @@ model User {
   auth_sessions                       AuthSession[]
   enrolled_course_sections_as_student CourseSectionEnrollment[]
   assigned_course_sections_as_faculty CourseSectionFacultyAssignment[]
+
+  assigned_classes Classes[]
 }
 
 enum UserRole {
@@ -162,6 +164,8 @@ model Classes {
   class_date      DateTime
   class_duration  Int
   class_location  String
+  class_faculty_id Int
+  class_faculty   User          @relation(fields: [class_faculty_id], references: [id], onDelete: Cascade) // On delete faculty, delete class
   class_status    ClassStatus @default(PLANNED)
   created_at      DateTime   @default(now())
   updated_at      DateTime   @updatedAt

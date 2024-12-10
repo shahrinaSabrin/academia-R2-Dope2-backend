@@ -9,6 +9,11 @@ export class CreateClassDto {
   @ApiProperty({
     required: true,
   })
+  faculty_id: number;
+
+  @ApiProperty({
+    required: true,
+  })
   class_title: string;
 
   @ApiProperty({

@@ -11,6 +11,32 @@ import { Prisma } from '@prisma/client';
 @Injectable()
 export class ClassesService {
   constructor(private prisma: PrismaService) {}
+
+  private classes_default_select: Prisma.ClassesSelect = {
+    id: true,
+    section_id: true,
+    class_title: true,
+    class_date: true,
+    class_duration: true,
+    class_location: true,
+    class_status: true,
+    class_faculty_id: true,
+    created_at: true,
+    updated_at: true,
+    class_faculty: {
+      select: {
+        id: true,
+        username: true,
+        profile: {
+          select: {
+            first_name: true,
+            last_name: true,
+          },
+        },
+      },
+    },
+  };
+
   async create(createClassDto: CreateClassDto) {
     const {
       section_id,
@@ -19,6 +45,7 @@ export class ClassesService {
       class_duration,
       class_location,
       class_status,
+      faculty_id,
     } = createClassDto;
 
     try {
@@ -30,7 +57,9 @@ export class ClassesService {
           class_duration,
           class_location,
           class_status,
+          class_faculty_id: faculty_id,
         },
+        select: this.classes_default_select,
       });
       return {
         message: 'Class created successfully',
@@ -42,7 +71,9 @@ export class ClassesService {
   }
 
   async findAll() {
-    const query: Prisma.ClassesFindManyArgs = {};
+    const query: Prisma.ClassesFindManyArgs = {
+      select: this.classes_default_select,
+    };
 
     const [data, total] = await this.prisma.$transaction([
       this.prisma.classes.findMany(query),
@@ -66,6 +97,7 @@ export class ClassesService {
       where: {
         id,
       },
+      select: this.classes_default_select,
     });
 
     if (!data) {
@@ -90,6 +122,7 @@ export class ClassesService {
       class_duration,
       class_location,
       class_status,
+      faculty_id,
     } = updateClassDto;
 
     try {
@@ -104,7 +137,9 @@ export class ClassesService {
           class_duration,
           class_location,
           class_status,
+          class_faculty_id: faculty_id,
         },
+        select: this.classes_default_select,
       });
 
       return {
