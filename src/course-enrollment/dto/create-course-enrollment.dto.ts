@@ -4,6 +4,7 @@ export class CreateCourseEnrollmentDto {
     required: true,
   })
   section_id: number;
+
   @ApiProperty({
     required: true,
   })

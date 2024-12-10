@@ -6,11 +6,13 @@ import { AuthModule } from './auth/auth.module';
 import { SectionModule } from './section/section.module';
 import { CourseEnrollmentModule } from './course-enrollment/course-enrollment.module';
 import { FacultyAssignmentModule } from './faculty-assignment/faculty-assignment.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
     PrismaModule,
     AuthModule,
+    FilesModule,
     UsersModule,
     CoursesModule,
     SectionModule,
