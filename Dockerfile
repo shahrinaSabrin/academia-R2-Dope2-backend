@@ -14,6 +14,10 @@ RUN npm install
 
 COPY . .
 
+RUN npx prisma generate
+
+COPY . .
+
 RUN npm run build
 
 COPY . .
