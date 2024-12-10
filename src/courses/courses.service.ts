@@ -80,6 +80,8 @@ export class CoursesService {
   async findAll(
     { search = '', limit = 10, page = 0 }: IPaginationQuery,
     course_status?: 'PLANNED' | 'ENROLLING' | 'ONGOING' | 'COMPLETED',
+    enrolled_student_id?: number,
+    assigned_faculty_id?: number,
   ) {
     const query: Prisma.CourseFindManyArgs = {
       where: {
@@ -109,6 +111,38 @@ export class CoursesService {
       skip: page * limit,
       select: this.courses_default_select,
     };
+
+    if (enrolled_student_id) {
+      query.where.AND = [
+        {
+          course_sections: {
+            some: {
+              course_section_student_enrollments: {
+                some: {
+                  user_id: enrolled_student_id,
+                },
+              },
+            },
+          },
+        },
+      ];
+    }
+
+    if (assigned_faculty_id) {
+      query.where.AND = [
+        {
+          course_sections: {
+            some: {
+              course_section_faculty_assignments: {
+                some: {
+                  faculty_id: assigned_faculty_id,
+                },
+              },
+            },
+          },
+        },
+      ];
+    }
 
     const [
       data, // data is an array of courses

@@ -36,6 +36,16 @@ export class CoursesController {
     required: false,
     enum: ['PLANNED', 'ENROLLING', 'ONGOING', 'COMPLETED'],
   })
+  @ApiQuery({
+    name: 'enrolled_student_id',
+    required: false,
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'assigned_faculty_id',
+    required: false,
+    type: Number,
+  })
   @ApiQuery(PageQuery) // PageQuery, reusing the PageQuery from the pagination query
   @ApiQuery(LimitQuery) // LimitQuery, reusing the LimitQuery from the pagination query
   @ApiQuery(SearchQuery) // SearchQuery, reusing the SearchQuery from the pagination query
@@ -43,8 +53,15 @@ export class CoursesController {
     @Query() query: IPaginationQuery,
     @Query('course_status')
     course_status?: 'PLANNED' | 'ENROLLING' | 'ONGOING' | 'COMPLETED',
+    @Query('enrolled_student_id') enrolled_student_id?: number,
+    @Query('assigned_faculty_id') assigned_faculty_id?: number,
   ) {
-    return this.coursesService.findAll(query, course_status);
+    return this.coursesService.findAll(
+      query,
+      course_status,
+      +enrolled_student_id,
+      +assigned_faculty_id,
+    );
   }
 
   @Get(':id')
