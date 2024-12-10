@@ -98,6 +98,7 @@ model CourseSection {
   course_section_material            CourseSectionMaterial[]
   course_section_student_enrollments CourseSectionEnrollment[]
   course_section_faculty_assignments CourseSectionFacultyAssignment[]
+  classes Classes[]
 }
 
 model CourseSectionEnrollment {
@@ -151,4 +152,23 @@ enum MaterialType {
   IMAGE
   VIDEO
   LINK
+}
+
+model Classes {
+  id              Int       @id @default(autoincrement())
+  section_id      Int
+  section         CourseSection @relation(fields: [section_id], references: [id], onDelete: Cascade) // On delete section, delete class
+  class_title     String
+  class_date      DateTime
+  class_duration  Int
+  class_location  String
+  class_status    ClassStatus @default(PLANNED)
+  created_at      DateTime   @default(now())
+  updated_at      DateTime   @updatedAt
+}
+
+enum ClassStatus {
+  PLANNED
+  ONGOING
+  COMPLETED
 }
